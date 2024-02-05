@@ -13,7 +13,7 @@ public class CopyKittenPlayerTest {
     }
 
     @Test
-    public void copycatPlayerSecondMoveWithCooperatePlayer() {
+    public void copyKittenPlayerFirstMoveWithCooperatePlayer() {
         CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
         CooperatePlayer cooperatePlayer = new CooperatePlayer();
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cooperatePlayer);
@@ -24,7 +24,7 @@ public class CopyKittenPlayerTest {
     }
 
     @Test
-    public void copycatPlayerSecondMoveWithCheatPlayer() {
+    public void copyKittenPlayerFirstMoveWithCheatPlayer() {
         CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
         CheatPlayer cheatPlayer = new CheatPlayer();
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cheatPlayer);
@@ -35,7 +35,29 @@ public class CopyKittenPlayerTest {
     }
 
     @Test
-    public void transactionBetweenCopycatAndCooperatePlayer() {
+    public void copyKittenPlayerSecondMoveWithCooperatePlayer() {
+        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
+        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cooperatePlayer);
+
+        transaction.evaluate(2);
+
+        assertNull(transaction.winner());
+    }
+
+    @Test
+    public void copyKittenPlayerSecondMoveWithCheatPlayer() {
+        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
+        CheatPlayer cheatPlayer = new CheatPlayer();
+        TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cheatPlayer);
+
+        transaction.evaluate(2);
+
+        assertEquals(cheatPlayer, transaction.winner());
+    }
+
+    @Test
+    public void transactionBetweenCopyKittenAndCooperatePlayer() {
         CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
         CooperatePlayer cooperatePlayer = new CooperatePlayer();
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cooperatePlayer);
@@ -46,7 +68,7 @@ public class CopyKittenPlayerTest {
     }
 
     @Test
-    public void transactionBetweenCopycatAndCheatPlayer() {
+    public void transactionBetweenCopyKittenAndCheatPlayer() {
         CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
         CheatPlayer cheatPlayer = new CheatPlayer();
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cheatPlayer);

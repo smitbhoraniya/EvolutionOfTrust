@@ -13,6 +13,28 @@ public class CopyCatPlayerTest {
     }
 
     @Test
+    public void copycatPlayerFirstMoveWithCooperatePlayer() {
+        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
+        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cooperatePlayer);
+
+        transaction.evaluate(1);
+
+        assertEquals(copyCatPlayer, transaction.winner());
+    }
+
+    @Test
+    public void copycatPlayerFirstMoveWithCheatPlayer() {
+        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
+        CheatPlayer cheatPlayer = new CheatPlayer();
+        TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cheatPlayer);
+
+        transaction.evaluate(1);
+
+        assertNull(transaction.winner());
+    }
+
+    @Test
     public void copycatPlayerSecondMoveWithCooperatePlayer() {
         CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
         CooperatePlayer cooperatePlayer = new CooperatePlayer();
