@@ -1,9 +1,8 @@
 package org.example;
 
-public class CooperatePlayer extends Player {
+public class CooperatePlayer implements Player {
     @Override
     public Move makeMove() {
-        this.move = Move.COOPERATE;
         return Move.COOPERATE;
     }
 }

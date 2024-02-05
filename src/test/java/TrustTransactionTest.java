@@ -5,6 +5,7 @@ import org.example.TrustTransaction;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TrustTransactionTest {
     @Test
@@ -15,8 +16,7 @@ public class TrustTransactionTest {
 
         transaction.evaluate(5);
 
-        assertEquals(0, player1.getPoints());
-        assertEquals(0, player2.getPoints());
+        assertNull(transaction.winner());
     }
 
     @Test
@@ -27,8 +27,7 @@ public class TrustTransactionTest {
 
         transaction.evaluate(5);
 
-        assertEquals(10, player1.getPoints());
-        assertEquals(10, player2.getPoints());
+        assertNull(transaction.winner());
     }
 
     @Test
@@ -39,7 +38,17 @@ public class TrustTransactionTest {
 
         transaction.evaluate(5);
 
-        assertEquals(-5, player1.getPoints());
-        assertEquals(15, player2.getPoints());
+        assertEquals(player2, transaction.winner());
+    }
+
+    @Test
+    public void transactionBetweenCheatPlayersAndCooperatePlayer() {
+        Player player1 = new CheatPlayer();
+        Player player2 = new CooperatePlayer();
+        TrustTransaction transaction = new TrustTransaction(player1, player2);
+
+        transaction.evaluate(5);
+
+        assertEquals(player1, transaction.winner());
     }
 }
