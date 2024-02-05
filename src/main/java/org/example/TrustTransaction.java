@@ -15,7 +15,15 @@ public class TrustTransaction {
             Move player1Move = player1.makeMove();
             Move player2Move = player2.makeMove();
 
-            scoreTracker.update(player1Move, player2Move);
+            if (player1Move == Move.COOPERATE) {
+                player1.invest();
+                player2.gain();
+            }
+            if (player2Move == Move.COOPERATE) {
+                player2.invest();
+                player1.gain();
+            }
+            scoreTracker.updateScores(player1Move, player2Move);
         }
     }
 

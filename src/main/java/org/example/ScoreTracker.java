@@ -4,7 +4,7 @@ public class ScoreTracker {
     private int playerOneScore = 0;
     private int playerTwoScore = 0;
 
-    public void update(Move playerOneMove, Move playerTwoMove) {
+    public void updateScores(Move playerOneMove, Move playerTwoMove) {
         if (playerOneMove == Move.CHEAT && playerTwoMove == Move.COOPERATE) {
             this.playerOneScore += 3;
             this.playerTwoScore -= 1;
