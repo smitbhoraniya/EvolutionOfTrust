@@ -1,10 +1,15 @@
-package org.example;
+package org.example.player;
+
+import org.example.Move;
 
 public class GrudgePlayer implements Player {
     private boolean isGrudging = false;
+    private boolean isInvestedInPreviousRound = false;
     @Override
     public Move makeMove() {
         Move move = Move.COOPERATE;
+        if (isInvestedInPreviousRound && !this.isGrudging)
+            this.isGrudging = true;
         if (isGrudging) {
             move = Move.CHEAT;
         }
@@ -13,13 +18,13 @@ public class GrudgePlayer implements Player {
 
     @Override
     public void invest() {
-        this.isGrudging = true;
+        this.isInvestedInPreviousRound = true;
     }
 
     @Override
     public void gain() {
-        if (this.isGrudging) {
-            this.isGrudging = false;
+        if (this.isInvestedInPreviousRound) {
+            this.isInvestedInPreviousRound = false;
         }
     }
 }

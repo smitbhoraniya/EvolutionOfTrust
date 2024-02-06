@@ -11,7 +11,8 @@ public class ScoreTrackerTest {
 
         scoreTracker.updateScores(Move.CHEAT, Move.CHEAT);
 
-        assertEquals(0, scoreTracker.winner());
+        assertEquals(0, scoreTracker.getPlayerOneScore());
+        assertEquals(0, scoreTracker.getPlayerTwoScore());
     }
 
     @Test
@@ -20,7 +21,8 @@ public class ScoreTrackerTest {
 
         scoreTracker.updateScores(Move.COOPERATE, Move.COOPERATE);
 
-        assertEquals(0, scoreTracker.winner());
+        assertEquals(2, scoreTracker.getPlayerOneScore());
+        assertEquals(2, scoreTracker.getPlayerTwoScore());
     }
 
     @Test
@@ -29,7 +31,8 @@ public class ScoreTrackerTest {
 
         scoreTracker.updateScores(Move.CHEAT, Move.COOPERATE);
 
-        assertEquals(1, scoreTracker.winner());
+        assertEquals(3, scoreTracker.getPlayerOneScore());
+        assertEquals(-1, scoreTracker.getPlayerTwoScore());
     }
 
     @Test
@@ -38,6 +41,7 @@ public class ScoreTrackerTest {
 
         scoreTracker.updateScores(Move.COOPERATE, Move.CHEAT);
 
-        assertEquals(-1, scoreTracker.winner());
+        assertEquals(-1, scoreTracker.getPlayerOneScore());
+        assertEquals(3, scoreTracker.getPlayerTwoScore());
     }
 }

@@ -1,4 +1,4 @@
-import org.example.CooperatePlayer;
+import org.example.player.CooperatePlayer;
 import org.example.Move;
 import org.junit.jupiter.api.Test;
 

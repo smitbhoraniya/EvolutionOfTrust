@@ -1,4 +1,4 @@
-import org.example.CheatPlayer;
+import org.example.player.CheatPlayer;
 import org.example.Move;
 import org.junit.jupiter.api.Test;
 

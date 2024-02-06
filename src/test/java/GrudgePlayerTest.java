@@ -1,80 +1,62 @@
 import org.example.*;
+import org.example.player.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class GrudgePlayerTest {
     @Test
-    public void copycatPlayerInitialMove() {
+    public void grudgePlayerInitialMove() {
         GrudgePlayer player = new GrudgePlayer();
 
         assertEquals(Move.COOPERATE, player.makeMove());
     }
 
     @Test
-    public void copycatPlayerFirstMoveWithCooperatePlayer() {
+    public void grudgePlayerWhenInvestAndMakeMove() {
         GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
-        TrustTransaction transaction = new TrustTransaction(grudgePlayer, cooperatePlayer);
 
-        transaction.evaluate(1);
+        grudgePlayer.invest();
 
-        assertNull(transaction.winner());
+        assertEquals(Move.CHEAT, grudgePlayer.makeMove());
     }
 
     @Test
-    public void copycatPlayerFirstMoveWithCheatPlayer() {
+    public void grudgePlayerWhenGainAndMakeMove() {
         GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
-        TrustTransaction transaction = new TrustTransaction(grudgePlayer, cheatPlayer);
 
-        transaction.evaluate(1);
+        grudgePlayer.gain();
 
-        assertEquals(cheatPlayer, transaction.winner());
+        assertEquals(Move.COOPERATE, grudgePlayer.makeMove());
     }
 
     @Test
-    public void copycatPlayerSecondMoveWithCooperatePlayer() {
+    public void grudgePlayerWhenGainAndInvestAndMakeMove() {
         GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
-        TrustTransaction transaction = new TrustTransaction(grudgePlayer, cooperatePlayer);
 
-        transaction.evaluate(2);
+        grudgePlayer.gain();
+        grudgePlayer.invest();
 
-        assertNull(transaction.winner());
+        assertEquals(Move.CHEAT, grudgePlayer.makeMove());
     }
 
     @Test
-    public void copycatPlayerSecondMoveWithCheatPlayer() {
+    public void expecteTheCheatEveryTimeAfterGrudgePlayerGotCheated() {
         GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
-        TrustTransaction transaction = new TrustTransaction(grudgePlayer, cheatPlayer);
 
-        transaction.evaluate(2);
+        assertEquals(Move.COOPERATE, grudgePlayer.makeMove());
+        grudgePlayer.invest();
 
-        assertEquals(cheatPlayer, transaction.winner());
+        assertEquals(Move.CHEAT, grudgePlayer.makeMove());
+        assertEquals(Move.CHEAT, grudgePlayer.makeMove());
     }
 
     @Test
-    public void transactionBetweenCopycatAndCooperatePlayer() {
+    public void expecteTheCooperateEveryTimeIfGrudgePlayerNotGotCheated() {
         GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
-        TrustTransaction transaction = new TrustTransaction(grudgePlayer, cooperatePlayer);
 
-        transaction.evaluate(5);
-
-        assertNull(transaction.winner());
-    }
-
-    @Test
-    public void transactionBetweenCopycatAndCheatPlayer() {
-        GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
-        TrustTransaction transaction = new TrustTransaction(grudgePlayer, cheatPlayer);
-
-        transaction.evaluate(5);
-
-        assertEquals(cheatPlayer, transaction.winner());
+        assertEquals(Move.COOPERATE, grudgePlayer.makeMove());
+        assertEquals(Move.COOPERATE, grudgePlayer.makeMove());
+        assertEquals(Move.COOPERATE, grudgePlayer.makeMove());
     }
 }

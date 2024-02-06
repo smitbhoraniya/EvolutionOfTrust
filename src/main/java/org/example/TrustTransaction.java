@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.player.Player;
+
 public class TrustTransaction {
     private final Player player1;
     private final Player player2;
@@ -28,11 +30,12 @@ public class TrustTransaction {
     }
 
     public Player winner() {
-        int winnerPlayer = this.scoreTracker.winner();
-        if (winnerPlayer == 1) {
+        int player1Score = scoreTracker.getPlayerOneScore();
+        int player2Score = scoreTracker.getPlayerTwoScore();
+        if (player1Score > player2Score) {
             return player1;
         }
-        else if (winnerPlayer == -1) {
+        else if (player2Score > player1Score) {
             return player2;
         }
         return null;

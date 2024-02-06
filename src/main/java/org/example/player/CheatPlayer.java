@@ -1,4 +1,6 @@
-package org.example;
+package org.example.player;
+
+import org.example.Move;
 
 public class CheatPlayer implements Player {
     @Override

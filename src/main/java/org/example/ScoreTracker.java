@@ -19,13 +19,11 @@ public class ScoreTracker {
         }
     }
 
-    public int winner() {
-        if (playerOneScore > playerTwoScore) {
-            return 1;
-        }
-        else if (playerTwoScore > playerOneScore) {
-            return -1;
-        }
-        return 0;
+    public int getPlayerOneScore() {
+        return playerOneScore;
+    }
+
+    public int getPlayerTwoScore() {
+        return playerTwoScore;
     }
 }

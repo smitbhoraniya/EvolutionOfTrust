@@ -1,4 +1,6 @@
-package org.example;
+package org.example.player;
+
+import org.example.Move;
 
 public class CopyKittenPlayer implements Player {
     private boolean isInvestedInPreviousRound = false;
@@ -14,11 +16,13 @@ public class CopyKittenPlayer implements Player {
 
     @Override
     public void invest() {
-        this.isInvestedInPreviousRound = !this.isInvestedInPreviousRound;
+        this.isInvestedInPreviousRound = true;
     }
 
     @Override
     public void gain() {
-        this.isInvestedInPreviousRound = !this.isInvestedInPreviousRound;
+        if (this.isInvestedInPreviousRound) {
+            this.isInvestedInPreviousRound = false;
+        }
     }
 }

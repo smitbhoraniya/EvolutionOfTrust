@@ -1,8 +1,8 @@
 import org.example.*;
+import org.example.player.CopyCatPlayer;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class CopyCatPlayerTest {
     @Test
@@ -13,68 +13,29 @@ public class CopyCatPlayerTest {
     }
 
     @Test
-    public void copycatPlayerFirstMoveWithCooperatePlayer() {
+    public void copycatPlayerWhenGainAndMakeMove() {
         CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
-        TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cooperatePlayer);
 
-        transaction.evaluate(1);
+        copyCatPlayer.gain();
 
-        assertEquals(copyCatPlayer, transaction.winner());
+        assertEquals(Move.COOPERATE, copyCatPlayer.makeMove());
     }
 
     @Test
-    public void copycatPlayerFirstMoveWithCheatPlayer() {
+    public void copycatPlayerWhenInvestAndMakeMove() {
         CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
-        TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cheatPlayer);
 
-        transaction.evaluate(1);
+        copyCatPlayer.invest();
 
-        assertNull(transaction.winner());
+        assertEquals(Move.CHEAT, copyCatPlayer.makeMove());
     }
 
     @Test
-    public void copycatPlayerSecondMoveWithCooperatePlayer() {
+    public void copycatPlayerWhenInvestAndGainAndMakeMove() {
         CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
-        TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cooperatePlayer);
 
-        transaction.evaluate(2);
+        copyCatPlayer.invest();
 
-        assertEquals(copyCatPlayer, transaction.winner());
-    }
-
-    @Test
-    public void copycatPlayerSecondMoveWithCheatPlayer() {
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
-        TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cheatPlayer);
-
-        transaction.evaluate(2);
-
-        assertNull(transaction.winner());
-    }
-
-    @Test
-    public void transactionBetweenCopycatAndCooperatePlayer() {
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
-        TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cooperatePlayer);
-
-        transaction.evaluate(5);
-
-        assertEquals(copyCatPlayer, transaction.winner());
-    }
-
-    @Test
-    public void transactionBetweenCopycatAndCheatPlayer() {
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
-        TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cheatPlayer);
-
-        transaction.evaluate(5);
-
-        assertNull(transaction.winner());
+        assertEquals(Move.CHEAT, copyCatPlayer.makeMove());
     }
 }
