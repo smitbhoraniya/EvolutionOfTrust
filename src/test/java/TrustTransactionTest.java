@@ -283,4 +283,71 @@ public class TrustTransactionTest {
 
         assertNull(transaction.winner());
     }
+
+    // detective
+    @Test
+    public void detectivePlayerFirstMoveWithCooperatePlayer() {
+        DetectivePlayer detectivePlayer = new DetectivePlayer();
+        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        TrustTransaction transaction = new TrustTransaction(detectivePlayer, cooperatePlayer);
+
+        transaction.evaluate(1);
+
+        assertNull(transaction.winner());
+    }
+
+    @Test
+    public void detectivePlayerSecondMoveWithCooperatePlayer() {
+        DetectivePlayer detectivePlayer = new DetectivePlayer();
+        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        TrustTransaction transaction = new TrustTransaction(detectivePlayer, cooperatePlayer);
+
+        transaction.evaluate(2);
+
+        assertEquals(detectivePlayer, transaction.winner());
+    }
+
+    @Test
+    public void detectivePlayerTransactionWithCooperatePlayerAndNotGotCheated() {
+        DetectivePlayer detectivePlayer = new DetectivePlayer();
+        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        TrustTransaction transaction = new TrustTransaction(detectivePlayer, cooperatePlayer);
+
+        transaction.evaluate(3);
+
+        assertEquals(detectivePlayer, transaction.winner());
+    }
+
+    @Test
+    public void detectivePlayerFirstMoveWithCheatPlayer() {
+        DetectivePlayer detectivePlayer = new DetectivePlayer();
+        CheatPlayer cheatPlayer = new CheatPlayer();
+        TrustTransaction transaction = new TrustTransaction(detectivePlayer, cheatPlayer);
+
+        transaction.evaluate(1);
+
+        assertEquals(cheatPlayer, transaction.winner());
+    }
+
+    @Test
+    public void detectivePlayerSecondMoveWithCheatPlayer() {
+        DetectivePlayer detectivePlayer = new DetectivePlayer();
+        CheatPlayer cheatPlayer = new CheatPlayer();
+        TrustTransaction transaction = new TrustTransaction(detectivePlayer, cheatPlayer);
+
+        transaction.evaluate(2);
+
+        assertEquals(cheatPlayer, transaction.winner());
+    }
+
+    @Test
+    public void detectivePlayerTransactionWithCheatPlayerAndGotCheated() {
+        DetectivePlayer detectivePlayer = new DetectivePlayer();
+        CheatPlayer cheatPlayer = new CheatPlayer();
+        TrustTransaction transaction = new TrustTransaction(detectivePlayer, cheatPlayer);
+
+        transaction.evaluate(3);
+
+        assertEquals(cheatPlayer, transaction.winner());
+    }
 }

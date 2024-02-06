@@ -34,8 +34,9 @@ public class CopyCatPlayerTest {
     public void copycatPlayerWhenInvestAndGainAndMakeMove() {
         CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
 
+        copyCatPlayer.gain();
         copyCatPlayer.invest();
 
-        assertEquals(Move.CHEAT, copyCatPlayer.makeMove());
+        assertEquals(Move.COOPERATE, copyCatPlayer.makeMove());
     }
 }
