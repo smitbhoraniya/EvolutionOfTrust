@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.*;
 
 public class TrustTransactionTest {
     @Test
@@ -53,301 +54,405 @@ public class TrustTransactionTest {
     // copy cat
     @Test
     public void copycatPlayerFirstMoveWithCooperatePlayer() {
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player copyCatPlayer = spy(new CopyCatPlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cooperatePlayer);
 
         transaction.evaluate(1);
 
         assertEquals(copyCatPlayer, transaction.winner());
+        verify(copyCatPlayer, times(1)).gain();
+        verify(cooperatePlayer, times(1)).invest();
     }
 
     @Test
     public void copycatPlayerFirstMoveWithCheatPlayer() {
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player copyCatPlayer = spy(new CopyCatPlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cheatPlayer);
 
         transaction.evaluate(1);
 
         assertNull(transaction.winner());
+        verify(copyCatPlayer, times(0)).gain();
+        verify(cheatPlayer, times(0)).gain();
     }
 
     @Test
     public void copycatPlayerSecondMoveWithCooperatePlayer() {
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player copyCatPlayer = spy(new CopyCatPlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cooperatePlayer);
 
         transaction.evaluate(2);
 
         assertEquals(copyCatPlayer, transaction.winner());
+        verify(copyCatPlayer, times(2)).gain();
+        verify(copyCatPlayer, times(1)).invest();
+        verify(cooperatePlayer, times(2)).invest();
+        verify(cooperatePlayer, times(1)).gain();
     }
 
     @Test
     public void copycatPlayerSecondMoveWithCheatPlayer() {
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player copyCatPlayer = spy(new CopyCatPlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cheatPlayer);
 
         transaction.evaluate(2);
 
         assertNull(transaction.winner());
+        verify(copyCatPlayer, times(0)).gain();
+        verify(copyCatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(0)).gain();
     }
 
     @Test
     public void transactionBetweenCopycatAndCooperatePlayer() {
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player copyCatPlayer = spy(new CopyCatPlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cooperatePlayer);
 
         transaction.evaluate(5);
 
         assertEquals(copyCatPlayer, transaction.winner());
+        verify(copyCatPlayer, times(5)).gain();
+        verify(copyCatPlayer, times(4)).invest();
+        verify(cooperatePlayer, times(5)).invest();
+        verify(cooperatePlayer, times(4)).gain();
     }
 
     @Test
     public void transactionBetweenCopycatAndCheatPlayer() {
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player copyCatPlayer = spy(new CopyCatPlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(copyCatPlayer, cheatPlayer);
 
         transaction.evaluate(5);
 
         assertNull(transaction.winner());
+        verify(copyCatPlayer, times(0)).gain();
+        verify(copyCatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(0)).gain();
     }
 
     // copy kitten
     @Test
     public void copyKittenPlayerFirstMoveWithCooperatePlayer() {
-        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player copyKittenPlayer = spy(new CopyKittenPlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cooperatePlayer);
 
-        transaction.evaluate(2);
+        transaction.evaluate(1);
 
         assertNull(transaction.winner());
+        verify(copyKittenPlayer, times(1)).gain();
+        verify(copyKittenPlayer, times(1)).invest();
+        verify(cooperatePlayer, times(1)).invest();
+        verify(cooperatePlayer, times(1)).gain();
     }
 
     @Test
     public void copyKittenPlayerFirstMoveWithCheatPlayer() {
-        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player copyKittenPlayer = spy(new CopyKittenPlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cheatPlayer);
 
-        transaction.evaluate(2);
+        transaction.evaluate(1);
 
         assertEquals(cheatPlayer, transaction.winner());
+        verify(copyKittenPlayer, times(0)).gain();
+        verify(copyKittenPlayer, times(1)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(1)).gain();
     }
 
     @Test
     public void copyKittenPlayerSecondMoveWithCooperatePlayer() {
-        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player copyKittenPlayer = spy(new CopyKittenPlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cooperatePlayer);
 
         transaction.evaluate(2);
 
         assertNull(transaction.winner());
+        verify(copyKittenPlayer, times(2)).gain();
+        verify(copyKittenPlayer, times(2)).invest();
+        verify(cooperatePlayer, times(2)).invest();
+        verify(cooperatePlayer, times(2)).gain();
     }
 
     @Test
     public void copyKittenPlayerSecondMoveWithCheatPlayer() {
-        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player copyKittenPlayer = spy(new CopyKittenPlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cheatPlayer);
 
         transaction.evaluate(2);
 
         assertEquals(cheatPlayer, transaction.winner());
+        verify(copyKittenPlayer, times(0)).gain();
+        verify(copyKittenPlayer, times(1)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(1)).gain();
     }
 
     @Test
     public void transactionBetweenCopyKittenAndCooperatePlayer() {
-        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player copyKittenPlayer = spy(new CopyKittenPlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cooperatePlayer);
 
         transaction.evaluate(5);
 
         assertNull(transaction.winner());
+        verify(copyKittenPlayer, times(5)).gain();
+        verify(copyKittenPlayer, times(5)).invest();
+        verify(cooperatePlayer, times(5)).invest();
+        verify(cooperatePlayer, times(5)).gain();
     }
 
     @Test
     public void transactionBetweenCopyKittenAndCheatPlayer() {
-        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player copyKittenPlayer = spy(new CopyKittenPlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, cheatPlayer);
 
         transaction.evaluate(5);
 
         assertEquals(cheatPlayer, transaction.winner());
+        verify(copyKittenPlayer, times(0)).gain();
+        verify(copyKittenPlayer, times(1)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(1)).gain();
     }
 
     @Test
     public void transactionBetweenCopyKittenAndCopyCatPlayer() {
-        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
+        Player copyKittenPlayer = spy(new CopyKittenPlayer());
+        Player copyCatPlayer = spy(new CopyCatPlayer());
         TrustTransaction transaction = new TrustTransaction(copyKittenPlayer, copyCatPlayer);
 
         transaction.evaluate(3);
 
         assertEquals(copyCatPlayer, transaction.winner());
+        verify(copyKittenPlayer, times(1)).gain();
+        verify(copyKittenPlayer, times(2)).invest();
+        verify(copyCatPlayer, times(1)).invest();
+        verify(copyCatPlayer, times(2)).gain();
     }
 
     // grudge
     @Test
     public void grudgePlayerFirstMoveWithCooperatePlayer() {
-        GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player grudgePlayer = spy(new GrudgePlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(grudgePlayer, cooperatePlayer);
 
         transaction.evaluate(1);
 
         assertNull(transaction.winner());
+        verify(grudgePlayer, times(1)).gain();
+        verify(grudgePlayer, times(1)).invest();
+        verify(cooperatePlayer, times(1)).invest();
+        verify(cooperatePlayer, times(1)).gain();
     }
 
     @Test
     public void grudgePlayerFirstMoveWithCheatPlayer() {
-        GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player grudgePlayer = spy(new GrudgePlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(grudgePlayer, cheatPlayer);
 
         transaction.evaluate(1);
 
         assertEquals(cheatPlayer, transaction.winner());
+        verify(grudgePlayer, times(0)).gain();
+        verify(grudgePlayer, times(1)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(1)).gain();
     }
 
     @Test
     public void grudgePlayerSecondMoveWithCooperatePlayer() {
-        GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player grudgePlayer = spy(new GrudgePlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(grudgePlayer, cooperatePlayer);
 
         transaction.evaluate(2);
 
         assertNull(transaction.winner());
+        verify(grudgePlayer, times(2)).gain();
+        verify(grudgePlayer, times(2)).invest();
+        verify(cooperatePlayer, times(2)).invest();
+        verify(cooperatePlayer, times(2)).gain();
     }
 
     @Test
     public void grudgePlayerSecondMoveWithCheatPlayer() {
-        GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player grudgePlayer = spy(new GrudgePlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(grudgePlayer, cheatPlayer);
 
         transaction.evaluate(2);
 
         assertEquals(cheatPlayer, transaction.winner());
+        verify(grudgePlayer, times(0)).gain();
+        verify(grudgePlayer, times(1)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(1)).gain();
     }
 
     @Test
     public void transactionBetweenGrudgeAndCooperatePlayer() {
-        GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player grudgePlayer = spy(new GrudgePlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(grudgePlayer, cooperatePlayer);
 
         transaction.evaluate(5);
 
         assertNull(transaction.winner());
+        verify(grudgePlayer, times(5)).gain();
+        verify(grudgePlayer, times(5)).invest();
+        verify(cooperatePlayer, times(5)).invest();
+        verify(cooperatePlayer, times(5)).gain();
     }
 
     @Test
     public void transactionBetweenGrudgeAndCheatPlayer() {
-        GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player grudgePlayer = spy(new GrudgePlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(grudgePlayer, cheatPlayer);
 
         transaction.evaluate(5);
 
         assertEquals(cheatPlayer, transaction.winner());
+        verify(grudgePlayer, times(0)).gain();
+        verify(grudgePlayer, times(1)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(1)).gain();
     }
 
     @Test
     public void transactionBetweenGrudgeAndCopyCatPlayer() {
-        GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CopyCatPlayer copyCatPlayer = new CopyCatPlayer();
+        Player grudgePlayer = spy(new GrudgePlayer());
+        Player copyCatPlayer = spy(new CopyCatPlayer());
         TrustTransaction transaction = new TrustTransaction(grudgePlayer, copyCatPlayer);
 
         transaction.evaluate(3);
 
         assertNull(transaction.winner());
+        verify(grudgePlayer, times(1)).gain();
+        verify(grudgePlayer, times(1)).invest();
+        verify(copyCatPlayer, times(1)).invest();
+        verify(copyCatPlayer, times(1)).gain();
     }
 
     @Test
     public void transactionBetweenGrudgeAndCopyKittenPlayer() {
-        GrudgePlayer grudgePlayer = new GrudgePlayer();
-        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
+        Player grudgePlayer = spy(new GrudgePlayer());
+        Player copyKittenPlayer = spy(new CopyKittenPlayer());
         TrustTransaction transaction = new TrustTransaction(grudgePlayer, copyKittenPlayer);
 
         transaction.evaluate(3);
 
         assertNull(transaction.winner());
+        verify(grudgePlayer, times(3)).gain();
+        verify(grudgePlayer, times(3)).invest();
+        verify(copyKittenPlayer, times(3)).invest();
+        verify(copyKittenPlayer, times(3)).gain();
     }
 
     // detective
     @Test
     public void detectivePlayerFirstMoveWithCooperatePlayer() {
-        DetectivePlayer detectivePlayer = new DetectivePlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player detectivePlayer = spy(new DetectivePlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(detectivePlayer, cooperatePlayer);
 
         transaction.evaluate(1);
 
         assertNull(transaction.winner());
+        verify(detectivePlayer, times(1)).gain();
+        verify(detectivePlayer, times(1)).invest();
+        verify(cooperatePlayer, times(1)).invest();
+        verify(cooperatePlayer, times(1)).gain();
     }
 
     @Test
     public void detectivePlayerSecondMoveWithCooperatePlayer() {
-        DetectivePlayer detectivePlayer = new DetectivePlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player detectivePlayer = spy(new DetectivePlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(detectivePlayer, cooperatePlayer);
 
         transaction.evaluate(2);
 
         assertEquals(detectivePlayer, transaction.winner());
+        verify(detectivePlayer, times(2)).gain();
+        verify(detectivePlayer, times(1)).invest();
+        verify(cooperatePlayer, times(2)).invest();
+        verify(cooperatePlayer, times(1)).gain();
     }
 
     @Test
     public void detectivePlayerTransactionWithCooperatePlayerAndNotGotCheated() {
-        DetectivePlayer detectivePlayer = new DetectivePlayer();
-        CooperatePlayer cooperatePlayer = new CooperatePlayer();
+        Player detectivePlayer = spy(new DetectivePlayer());
+        Player cooperatePlayer = spy(new CooperatePlayer());
         TrustTransaction transaction = new TrustTransaction(detectivePlayer, cooperatePlayer);
 
         transaction.evaluate(3);
 
         assertEquals(detectivePlayer, transaction.winner());
+        verify(detectivePlayer, times(3)).gain();
+        verify(detectivePlayer, times(1)).invest();
+        verify(cooperatePlayer, times(3)).invest();
+        verify(cooperatePlayer, times(1)).gain();
     }
 
     @Test
     public void detectivePlayerFirstMoveWithCheatPlayer() {
-        DetectivePlayer detectivePlayer = new DetectivePlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player detectivePlayer = spy(new DetectivePlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(detectivePlayer, cheatPlayer);
 
         transaction.evaluate(1);
 
         assertEquals(cheatPlayer, transaction.winner());
+        verify(detectivePlayer, times(0)).gain();
+        verify(detectivePlayer, times(1)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(1)).gain();
     }
 
     @Test
     public void detectivePlayerSecondMoveWithCheatPlayer() {
-        DetectivePlayer detectivePlayer = new DetectivePlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player detectivePlayer = spy(new DetectivePlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(detectivePlayer, cheatPlayer);
 
         transaction.evaluate(2);
 
         assertEquals(cheatPlayer, transaction.winner());
+        verify(detectivePlayer, times(0)).gain();
+        verify(detectivePlayer, times(1)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(1)).gain();
     }
 
     @Test
     public void detectivePlayerTransactionWithCheatPlayerAndGotCheated() {
-        DetectivePlayer detectivePlayer = new DetectivePlayer();
-        CheatPlayer cheatPlayer = new CheatPlayer();
+        Player detectivePlayer = spy(new DetectivePlayer());
+        Player cheatPlayer = spy(new CheatPlayer());
         TrustTransaction transaction = new TrustTransaction(detectivePlayer, cheatPlayer);
 
         transaction.evaluate(3);
 
         assertEquals(cheatPlayer, transaction.winner());
+        verify(detectivePlayer, times(0)).gain();
+        verify(detectivePlayer, times(1)).invest();
+        verify(cheatPlayer, times(0)).invest();
+        verify(cheatPlayer, times(1)).gain();
     }
 }

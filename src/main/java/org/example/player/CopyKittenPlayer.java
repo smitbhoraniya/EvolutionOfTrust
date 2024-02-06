@@ -3,26 +3,19 @@ package org.example.player;
 import org.example.Move;
 
 public class CopyKittenPlayer implements Player {
-    private boolean isInvestedInPreviousRound = false;
+    private boolean isGainedInPreviousRound = true;
     @Override
     public Move makeMove() {
-        Move move = Move.COOPERATE;
-        if (isInvestedInPreviousRound) {
-            move = Move.CHEAT;
+        Move move = Move.CHEAT;
+        if (isGainedInPreviousRound) {
+            move = Move.COOPERATE;
         }
-        isInvestedInPreviousRound = false;
+        isGainedInPreviousRound = false;
         return move;
     }
 
     @Override
-    public void invest() {
-        this.isInvestedInPreviousRound = true;
-    }
-
-    @Override
     public void gain() {
-        if (this.isInvestedInPreviousRound) {
-            this.isInvestedInPreviousRound = false;
-        }
+        this.isGainedInPreviousRound = true;
     }
 }

@@ -13,15 +13,6 @@ public class CopyKittenPlayerTest {
     }
 
     @Test
-    public void copyKittenPlayerWhenInvestAndMakeMove() {
-        CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
-
-        copyKittenPlayer.invest();
-
-        assertEquals(Move.CHEAT, copyKittenPlayer.makeMove());
-    }
-
-    @Test
     public void copyKittenPlayerWhenGainAndMakeMove() {
         CopyKittenPlayer copyKittenPlayer = new CopyKittenPlayer();
 
