@@ -4,7 +4,7 @@ import org.example.Move;
 
 import java.util.Random;
 
-public class Player {
+public class Player implements Cloneable {
     private int score = 0;
     public Move makeMove() {
         Random random = new Random();
@@ -26,7 +26,12 @@ public class Player {
         return this.score;
     }
 
+    @Override
     public Player clone() {
-        return new Player();
+        try {
+            return (Player) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError(e);
+        }
     }
 }

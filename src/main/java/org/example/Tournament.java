@@ -26,13 +26,9 @@ public class Tournament {
             if (allPlayersSame()) {
                 return this.players;
             }
-            for (int j = 0; j < players.size(); j++) {
-                for (int k = j + 1; k < players.size(); k++) {
-                    TrustTransaction trustTransaction = new TrustTransaction(this.players.get(j), this.players.get(k));
-                    trustTransaction.evaluate(1);
-                }
-            }
-            addAndRemoveFivePlayer();
+            transactionBetweenPlayers();
+            reproduceTheTopFivePlayer();
+            eliminateTheLastFivePlayer();
         }
         return this.players;
     }
@@ -49,7 +45,16 @@ public class Tournament {
         return count == players.size();
     }
 
-    private void addAndRemoveFivePlayer() {
+    private void transactionBetweenPlayers() {
+        for (int j = 0; j < players.size(); j++) {
+            for (int k = j + 1; k < players.size(); k++) {
+                TrustTransaction trustTransaction = new TrustTransaction(this.players.get(j), this.players.get(k));
+                trustTransaction.evaluate(1);
+            }
+        }
+    }
+
+    private void reproduceTheTopFivePlayer() {
         players.sort(Comparator.comparing(Player::score));
         List<Player> playerToBeAdded = new ArrayList<>();
 
@@ -59,9 +64,13 @@ public class Tournament {
             playerToBeAdded.add(clonedPlayer);
         }
 
+        this.players.addAll(playerToBeAdded);
+    }
+
+    private void eliminateTheLastFivePlayer() {
+        players.sort(Comparator.comparing(Player::score).reversed());
         int size = players.size();
         List<Player> removedPlayers = players.subList(size - 5, size);
         this.players.removeAll(removedPlayers);
-        this.players.addAll(playerToBeAdded);
     }
 }
