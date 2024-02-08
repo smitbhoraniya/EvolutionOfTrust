@@ -2,7 +2,7 @@ package org.example.player;
 
 import org.example.Move;
 
-public class CopyKittenPlayer implements Player {
+public class CopyKittenPlayer extends Player {
     private boolean isGainedInPreviousRound = true;
     @Override
     public Move makeMove() {
@@ -17,5 +17,6 @@ public class CopyKittenPlayer implements Player {
     @Override
     public void gain() {
         this.isGainedInPreviousRound = true;
+        super.gain();
     }
 }

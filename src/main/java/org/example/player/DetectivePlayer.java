@@ -2,7 +2,7 @@ package org.example.player;
 
 import org.example.Move;
 
-public class DetectivePlayer implements Player {
+public class DetectivePlayer extends Player {
     private boolean isInvestedInPreviousRound = false;
     private boolean isGainedInPreviousRound = false;
     private int roundNumber = 0;
@@ -34,6 +34,7 @@ public class DetectivePlayer implements Player {
     @Override
     public void invest() {
         this.isInvestedInPreviousRound = true;
+        super.invest();
     }
 
     @Override
@@ -42,5 +43,6 @@ public class DetectivePlayer implements Player {
         if (this.isInvestedInPreviousRound) {
             this.isInvestedInPreviousRound = false;
         }
+        super.gain();
     }
 }

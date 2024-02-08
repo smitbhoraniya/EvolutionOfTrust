@@ -455,4 +455,19 @@ public class TrustTransactionTest {
         verify(cheatPlayer, times(0)).invest();
         verify(cheatPlayer, times(1)).gain();
     }
+
+    @Test
+    public void detectivePlayerTransactionWithCopyCatPlayer() {
+        Player detectivePlayer = spy(new DetectivePlayer());
+        Player copyCatPlayer = spy(new CopyCatPlayer());
+        TrustTransaction transaction = new TrustTransaction(detectivePlayer, copyCatPlayer);
+
+        transaction.evaluate(4);
+
+        assertNull(transaction.winner());
+        verify(detectivePlayer, times(2)).gain();
+        verify(detectivePlayer, times(2)).invest();
+        verify(copyCatPlayer, times(2)).invest();
+        verify(copyCatPlayer, times(2)).gain();
+    }
 }
